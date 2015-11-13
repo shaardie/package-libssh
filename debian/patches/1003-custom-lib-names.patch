@@ -1,0 +1,47 @@
+Description: Allow to overwrite libssh's OUTPUT_NAME.
+Author: Sebastian Ramacher <s.ramacher@gmx.at>
+Last-Update: 2012-06-19
+
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -92,6 +92,11 @@
+   CACHE INTERNAL "libssh link libraries"
+ )
+ 
++set(LIBSSH_LIBRARY_NAME
++  ssh
++  CACHE INTERNAL "libssh library name"
++)
++
+ set(LIBSSH_SHARED_LIBRARY
+   ssh_shared
+   CACHE INTERNAL "libssh shared library"
+@@ -237,7 +242,7 @@
+       SOVERSION
+         ${LIBRARY_SOVERSION}
+       OUTPUT_NAME
+-        ssh
++        ${LIBSSH_LIBRARY_NAME}
+       DEFINE_SYMBOL
+         LIBSSH_EXPORTS
+ )
+--- a/src/threads/CMakeLists.txt
++++ b/src/threads/CMakeLists.txt
+@@ -71,7 +71,7 @@
+           SOVERSION
+             ${LIBRARY_SOVERSION}
+           OUTPUT_NAME
+-            ssh_threads
++		  ${LIBSSH_LIBRARY_NAME}_threads
+           DEFINE_SYMBOL
+             LIBSSH_EXPORTS
+     )
+@@ -106,7 +106,7 @@
+             SOVERSION
+               ${LIBRARY_SOVERSION}
+             OUTPUT_NAME
+-              ssh_threads
++			${LIBSSH_LIBRARY_NAME}_threads
+             ARCHIVE_OUTPUT_DIRECTORY
+               ${CMAKE_CURRENT_BINARY_DIR}/${OUTPUT_SUFFIX}
+       )
